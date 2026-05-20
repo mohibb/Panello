@@ -313,7 +313,6 @@
       position: relative;
     }
 
-    /* Time column */
     .time-col {
       position: relative;
       border-right: 1px solid #F2F2F7;
@@ -329,7 +328,6 @@
       white-space: nowrap;
     }
 
-    /* Day columns */
     .day-col {
       position: relative;
       border-left: 1px solid #E5E5EA;
@@ -351,7 +349,6 @@
       border-top: 1px dashed #F7F7F7;
     }
 
-    /* Events */
     .cal-event {
       position: absolute;
       left: 4px;
@@ -379,7 +376,6 @@
       line-height: 1.2;
     }
 
-    /* Now line */
     .now-line {
       position: absolute;
       left: -1px;
@@ -401,9 +397,7 @@
     }
 
     /* ===== TASKS TAB ===== */
-    #tab-tasks {
-      display: none;
-    }
+    #tab-tasks { display: none; }
 
     #tab-tasks.active {
       display: block;
@@ -508,9 +502,7 @@
     }
 
     /* ===== MEALS TAB ===== */
-    #tab-meals {
-      display: none;
-    }
+    #tab-meals { display: none; }
 
     #tab-meals.active {
       display: block;
@@ -523,7 +515,6 @@
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 10px;
-      margin-top: 0;
     }
 
     .meal-card {
@@ -586,9 +577,7 @@
     }
 
     /* ===== PHOTOS TAB ===== */
-    #tab-photos {
-      display: none;
-    }
+    #tab-photos { display: none; }
 
     #tab-photos.active {
       display: block;
@@ -610,10 +599,7 @@
       position: relative;
     }
 
-    .photo-bg {
-      position: absolute;
-      inset: 0;
-    }
+    .photo-bg { position: absolute; inset: 0; }
 
     .photo-cap {
       position: absolute;
@@ -626,6 +612,242 @@
       font-weight: 500;
       color: rgba(255,255,255,0.9);
     }
+
+    /* ===== SETTINGS TAB ===== */
+    #tab-settings { display: none; }
+
+    #tab-settings.active {
+      display: block;
+      overflow-y: auto;
+      background: #F0F2F5;
+      padding: 28px 28px 48px;
+    }
+
+    .settings-section {
+      background: #FFFFFF;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .settings-section-head {
+      padding: 16px 20px 14px;
+      border-bottom: 1px solid #F2F2F7;
+    }
+
+    .settings-section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #3C3C43;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .settings-section-desc {
+      font-size: 12px;
+      color: #8E8E93;
+      margin-top: 5px;
+      line-height: 1.5;
+      max-width: 560px;
+    }
+
+    #settings-groups {
+      padding: 12px 16px 4px;
+    }
+
+    .group-card {
+      background: #FAFAFA;
+      border: 1px solid #E5E5EA;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .group-header-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+    }
+
+    input[type="color"].color-picker {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 34px;
+      height: 34px;
+      border: 2px solid rgba(0,0,0,0.08);
+      border-radius: 8px;
+      padding: 3px;
+      cursor: pointer;
+      flex-shrink: 0;
+      background: transparent;
+    }
+    input[type="color"].color-picker::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"].color-picker::-webkit-color-swatch { border-radius: 4px; border: none; }
+
+    .group-name-input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #E5E5EA;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1A1A1A;
+      background: #FFFFFF;
+      outline: none;
+      font-family: inherit;
+      min-width: 0;
+    }
+    .group-name-input:focus {
+      border-color: #007AFF;
+      box-shadow: 0 0 0 3px rgba(0,122,255,0.12);
+    }
+
+    .btn-delete-group {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      cursor: pointer;
+      color: #C7C7CC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: color 0.15s, background 0.15s;
+    }
+    .btn-delete-group:hover { color: #FF3B30; background: rgba(255,59,48,0.08); }
+
+    .group-cals {
+      border-top: 1px solid #E5E5EA;
+      padding: 10px 12px 10px;
+    }
+
+    .group-cals-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #AEAEB2;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+
+    .cal-entry {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+
+    .cal-name-input {
+      flex: 1;
+      padding: 7px 10px;
+      border: 1px solid #E5E5EA;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #1A1A1A;
+      background: #FFFFFF;
+      outline: none;
+      font-family: inherit;
+      min-width: 0;
+    }
+    .cal-name-input:focus {
+      border-color: #007AFF;
+      box-shadow: 0 0 0 3px rgba(0,122,255,0.12);
+    }
+
+    .cal-id-input {
+      flex: 2;
+      padding: 7px 10px;
+      border: 1px solid #E5E5EA;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #AEAEB2;
+      background: #F7F7F9;
+      outline: none;
+      font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+      min-width: 0;
+    }
+    .cal-id-input:focus {
+      border-color: #007AFF;
+      box-shadow: 0 0 0 3px rgba(0,122,255,0.12);
+      color: #1A1A1A;
+      background: #FFFFFF;
+    }
+    .cal-id-input::placeholder { color: #C7C7CC; }
+
+    .btn-remove-cal {
+      width: 28px;
+      height: 28px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+      color: #C7C7CC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: color 0.15s, background 0.15s;
+    }
+    .btn-remove-cal:hover { color: #FF3B30; background: rgba(255,59,48,0.08); }
+
+    .btn-add-cal {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 10px;
+      border: 1px dashed #D1D1D6;
+      border-radius: 8px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      color: #8E8E93;
+      font-family: inherit;
+      transition: all 0.15s;
+      margin-top: 2px;
+    }
+    .btn-add-cal:hover { border-color: #007AFF; color: #007AFF; background: rgba(0,122,255,0.04); }
+
+    .btn-add-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      width: 100%;
+      padding: 13px 20px;
+      border: none;
+      border-top: 1px solid #F2F2F7;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #007AFF;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .btn-add-group:hover { background: rgba(0,122,255,0.04); }
+
+    .btn-reset {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 16px;
+      border: 1px solid #E5E5EA;
+      border-radius: 10px;
+      background: #FFFFFF;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: #FF3B30;
+      font-family: inherit;
+      transition: background 0.15s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .btn-reset:hover { background: rgba(255,59,48,0.05); }
   </style>
 </head>
 <body>
@@ -668,6 +890,13 @@
           <polyline points="21 15 16 10 5 21"/>
         </svg>
         <span class="nav-label">Bilder</span>
+      </button>
+      <button class="nav-btn" id="nav-settings" onclick="showTab('settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+        </svg>
+        <span class="nav-label">Setup</span>
       </button>
     </div>
     <div class="sidebar-clock">
@@ -742,25 +971,88 @@
       <div class="photos-grid" id="photos-grid"></div>
     </div>
 
+    <!-- SETTINGS -->
+    <div id="tab-settings" class="tab-panel">
+      <div class="section-title">Innstillinger</div>
+      <div class="section-sub">Tilpass kalendergrupper og visning</div>
+
+      <div class="settings-section">
+        <div class="settings-section-head">
+          <div class="settings-section-label">Kalendergrupper</div>
+          <div class="settings-section-desc">
+            Hvert gruppe vises som én rad i kalendervisningen. Du kan legge til flere Google-kalendere per gruppe — de slås sammen til én farge. Google Kalender-ID-er kobles til i fase 4.
+          </div>
+        </div>
+        <div id="settings-groups"></div>
+        <button class="btn-add-group" onclick="addGroup()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Legg til ny gruppe
+        </button>
+      </div>
+
+      <button class="btn-reset" onclick="resetSettings()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+        Tilbakestill til standard
+      </button>
+    </div>
+
   </main>
 </div>
 
 <script>
-// ===== STATIC CONFIG =====
-const MEMBERS = [
-  { id: 'mohibb', name: 'Mohibb', color: '#3D8EE8' },
-  { id: 'saffa',  name: 'Saffa',  color: '#E8607A' },
-  { id: 'jonas',  name: 'Jonas',  color: '#F0A500' },
-  { id: 'noah',   name: 'Noah',   color: '#48B368' },
-  { id: 'family', name: 'Familie',color: '#8B6FD4' },
-];
-const COLORS = Object.fromEntries(MEMBERS.map(m => [m.id, m.color]));
+// ===== SETTINGS MODEL =====
+const DEFAULT_SETTINGS = {
+  groups: [
+    { id:'mohibb', name:'Mohibb', color:'#3D8EE8', calendars:[{ name:'Mohibb', calId:'' }] },
+    { id:'saffa',  name:'Saffa',  color:'#E8607A', calendars:[{ name:'Saffa',  calId:'' }] },
+    { id:'jonas',  name:'Jonas',  color:'#F0A500', calendars:[{ name:'Jonas',  calId:'' }] },
+    { id:'noah',   name:'Noah',   color:'#48B368', calendars:[{ name:'Noah',   calId:'' }] },
+    { id:'family', name:'Familie',color:'#8B6FD4', calendars:[{ name:'Familie',calId:'' }] },
+  ]
+};
 
-const DAY_SHORT  = ['Man','Tir','Ons','Tor','Fre','Lør','Søn'];
-const MONTH_SHORT= ['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'];
+let settings;
 
-const H_START = 6;   // 06:00
-const H_END   = 24;  // 00:00 (midnight)
+function loadSettings() {
+  try {
+    const s = localStorage.getItem('panello_settings');
+    if (s) return JSON.parse(s);
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+}
+
+function saveSettings() {
+  localStorage.setItem('panello_settings', JSON.stringify(settings));
+}
+
+// Rebuild MEMBERS/COLORS from settings and re-render live views
+function applySettings() {
+  MEMBERS.length = 0;
+  Object.keys(COLORS).forEach(k => delete COLORS[k]);
+  settings.groups.forEach(g => {
+    MEMBERS.push({ id: g.id, name: g.name, color: g.color });
+    COLORS[g.id] = g.color;
+  });
+  renderLegend();
+  renderCalendar();
+}
+
+let saveTimer = null;
+function queueSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { saveSettings(); applySettings(); }, 350);
+}
+
+// ===== DERIVED STATE (populated from settings on init) =====
+let MEMBERS = [];
+let COLORS  = {};
+
+// ===== CONSTANTS =====
+const DAY_SHORT   = ['Man','Tir','Ons','Tor','Fre','Lør','Søn'];
+const MONTH_SHORT = ['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'];
+
+const H_START = 6;
+const H_END   = 24;
 const H_TOTAL = H_END - H_START;
 
 // ===== MOCK DATA =====
@@ -798,8 +1090,8 @@ const TASKS = [
     { text:'Handle inn helgepakker',  done:false },
   ]},
   { owner:'jonas', items:[
-    { text:'Rydd rommet',          done:true  },
-    { text:'Øv på matteprøven',    done:false },
+    { text:'Rydd rommet',       done:true  },
+    { text:'Øv på matteprøven', done:false },
   ]},
   { owner:'noah', items:[
     { text:'Pakk idrettsveske', done:false },
@@ -850,22 +1142,15 @@ function addDays(date, n) {
   return d;
 }
 
-function toISO(d) {
-  return d.toISOString().slice(0, 10);
-}
-
-function pad(n) {
-  return String(n).padStart(2, '0');
-}
+function toISO(d) { return d.toISOString().slice(0, 10); }
+function pad(n)   { return String(n).padStart(2, '0'); }
 
 function timeFrac(t) {
   const [h, m] = t.split(':').map(Number);
   return (h - H_START + m / 60) / H_TOTAL;
 }
 
-function todayISO() {
-  return toISO(new Date());
-}
+function todayISO() { return toISO(new Date()); }
 
 // ===== CLOCK =====
 function tickClock() {
@@ -880,7 +1165,7 @@ setInterval(tickClock, 1000);
 tickClock();
 
 // ===== TAB SWITCHING =====
-const TABS = ['calendar', 'tasks', 'meals', 'photos'];
+const TABS = ['calendar', 'tasks', 'meals', 'photos', 'settings'];
 
 function showTab(tab) {
   activeTab = tab;
@@ -913,35 +1198,27 @@ function renderCalendar() {
   const today = todayISO();
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 
-  // Week title
   const a = days[0], b = days[6];
   document.getElementById('cal-week-title').textContent =
     a.getDate() + '. ' + MONTH_SHORT[a.getMonth()] + ' – ' +
     b.getDate() + '. ' + MONTH_SHORT[b.getMonth()] + ' ' + b.getFullYear();
 
-  // Day header row
   const headersEl = document.getElementById('cal-day-headers');
   headersEl.innerHTML = '<div class="cal-day-header-spacer"></div>';
   days.forEach((d, i) => {
     const isToday = toISO(d) === today;
     const el = document.createElement('div');
     el.className = 'cal-day-header' + (isToday ? ' is-today' : '');
-    const numEl = isToday
-      ? `<div class="day-num-label">${d.getDate()}</div>`
-      : `<div class="day-num-label">${d.getDate()}</div>`;
-    el.innerHTML = `<div class="day-name-label">${DAY_SHORT[i]}</div>${numEl}`;
+    el.innerHTML = `<div class="day-name-label">${DAY_SHORT[i]}</div><div class="day-num-label">${d.getDate()}</div>`;
     headersEl.appendChild(el);
   });
 
-  // Grid
   const grid = document.getElementById('cal-grid');
   grid.innerHTML = '';
 
-  // Time column
   const timeCol = document.createElement('div');
   timeCol.className = 'time-col';
-  for (let h = H_START; h <= H_END; h++) {
-    if (h === H_END) break;
+  for (let h = H_START; h < H_END; h++) {
     const label = document.createElement('div');
     label.className = 'time-label';
     label.style.top = ((h - H_START) / H_TOTAL * 100) + '%';
@@ -950,14 +1227,12 @@ function renderCalendar() {
   }
   grid.appendChild(timeCol);
 
-  // Day columns
   days.forEach(d => {
     const iso = toISO(d);
     const isToday = iso === today;
     const col = document.createElement('div');
     col.className = 'day-col' + (isToday ? ' is-today' : '');
 
-    // Hour and half-hour lines
     for (let h = 0; h < H_TOTAL; h++) {
       const line = document.createElement('div');
       line.className = 'hour-line';
@@ -970,9 +1245,8 @@ function renderCalendar() {
       col.appendChild(half);
     }
 
-    // Events
     EVENTS.filter(e => e.date === iso).forEach(ev => {
-      const top = timeFrac(ev.time);
+      const top    = timeFrac(ev.time);
       const height = timeFrac(ev.end) - top;
       const el = document.createElement('div');
       el.className = 'cal-event';
@@ -981,7 +1255,6 @@ function renderCalendar() {
       col.appendChild(el);
     });
 
-    // Now-line for today
     if (isToday) {
       const now = new Date();
       const h = now.getHours(), m = now.getMinutes();
@@ -1017,9 +1290,9 @@ function renderTasks() {
   list.innerHTML = '';
 
   TASKS.forEach(group => {
-    const member = MEMBERS.find(m => m.id === group.owner);
-    const color  = member ? member.color : '#8E8E93';
-    const name   = member ? member.name  : 'Felles';
+    const member    = MEMBERS.find(m => m.id === group.owner);
+    const color     = member ? member.color : '#8E8E93';
+    const name      = member ? member.name  : 'Felles';
     const remaining = group.items.filter(t => !t.done).length;
 
     const section = document.createElement('div');
@@ -1058,7 +1331,7 @@ function renderTasks() {
 // ===== MEALS =====
 function renderMeals() {
   const today = todayISO();
-  const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
+  const days  = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 
   const a = days[0], b = days[6];
   document.getElementById('meals-sub').textContent =
@@ -1069,9 +1342,9 @@ function renderMeals() {
   grid.innerHTML = '';
 
   days.forEach((d, i) => {
-    const iso = toISO(d);
+    const iso     = toISO(d);
     const isToday = iso === today;
-    const meal = MEALS.find(m => m.date === iso) || {};
+    const meal    = MEALS.find(m => m.date === iso) || {};
 
     const card = document.createElement('div');
     card.className = 'meal-card' + (isToday ? ' is-today' : '');
@@ -1083,15 +1356,11 @@ function renderMeals() {
       <div class="meal-slots">
         <div>
           <div class="meal-label">Lunsj</div>
-          ${meal.lunch
-            ? `<div class="meal-value">${meal.lunch}</div>`
-            : `<div class="meal-empty">—</div>`}
+          ${meal.lunch  ? `<div class="meal-value">${meal.lunch}</div>`  : `<div class="meal-empty">—</div>`}
         </div>
         <div>
           <div class="meal-label">Middag</div>
-          ${meal.dinner
-            ? `<div class="meal-value">${meal.dinner}</div>`
-            : `<div class="meal-empty">—</div>`}
+          ${meal.dinner ? `<div class="meal-value">${meal.dinner}</div>` : `<div class="meal-empty">—</div>`}
         </div>
       </div>
     `;
@@ -1106,21 +1375,170 @@ function renderPhotos() {
   PHOTOS.forEach(p => {
     const item = document.createElement('div');
     item.className = 'photo-item';
-    item.innerHTML = `
-      <div class="photo-bg" style="background:${p.bg}"></div>
-      <div class="photo-cap">${p.cap}</div>
-    `;
+    item.innerHTML = `<div class="photo-bg" style="background:${p.bg}"></div><div class="photo-cap">${p.cap}</div>`;
     grid.appendChild(item);
   });
 }
 
+// ===== SETTINGS =====
+const COLOR_PALETTE = ['#E84040','#E87D40','#DDB033','#48B368','#3D8EE8','#7B5CE5','#E86097','#00B5B8'];
+
+function renderSettings() {
+  const container = document.getElementById('settings-groups');
+  container.innerHTML = '';
+
+  settings.groups.forEach(group => {
+    const card = document.createElement('div');
+    card.className = 'group-card';
+
+    // Header row: color picker + name + delete
+    const headerRow = document.createElement('div');
+    headerRow.className = 'group-header-row';
+
+    const colorInput = document.createElement('input');
+    colorInput.type  = 'color';
+    colorInput.className = 'color-picker';
+    colorInput.value = group.color;
+    colorInput.title = 'Velg farge';
+    colorInput.oninput = e => {
+      group.color = e.target.value;
+      queueSave();
+    };
+
+    const nameInput = document.createElement('input');
+    nameInput.type  = 'text';
+    nameInput.className = 'group-name-input';
+    nameInput.value = group.name;
+    nameInput.placeholder = 'Gruppenavn';
+    nameInput.oninput = e => {
+      group.name = e.target.value;
+      queueSave();
+    };
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'btn-delete-group';
+    deleteBtn.title = 'Slett gruppe';
+    deleteBtn.disabled = settings.groups.length <= 1;
+    deleteBtn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>`;
+    deleteBtn.onclick = () => removeGroup(group.id);
+
+    headerRow.appendChild(colorInput);
+    headerRow.appendChild(nameInput);
+    headerRow.appendChild(deleteBtn);
+    card.appendChild(headerRow);
+
+    // Calendars sub-section
+    const calsSection = document.createElement('div');
+    calsSection.className = 'group-cals';
+
+    const calsLabel = document.createElement('div');
+    calsLabel.className = 'group-cals-label';
+    calsLabel.textContent = 'Kalendere i denne gruppen';
+    calsSection.appendChild(calsLabel);
+
+    group.calendars.forEach((cal, ci) => {
+      const row = document.createElement('div');
+      row.className = 'cal-entry';
+
+      const calName = document.createElement('input');
+      calName.type  = 'text';
+      calName.className = 'cal-name-input';
+      calName.value = cal.name;
+      calName.placeholder = 'Navn';
+      calName.oninput = e => { cal.name = e.target.value; queueSave(); };
+
+      const calId = document.createElement('input');
+      calId.type  = 'text';
+      calId.className = 'cal-id-input';
+      calId.value = cal.calId;
+      calId.placeholder = 'Google Kalender-ID  (fase 4)';
+      calId.oninput = e => { cal.calId = e.target.value; queueSave(); };
+
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'btn-remove-cal';
+      removeBtn.title = 'Fjern';
+      removeBtn.disabled = group.calendars.length <= 1;
+      removeBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+      removeBtn.onclick = () => removeCal(group.id, ci);
+
+      row.appendChild(calName);
+      row.appendChild(calId);
+      row.appendChild(removeBtn);
+      calsSection.appendChild(row);
+    });
+
+    const addCalBtn = document.createElement('button');
+    addCalBtn.className = 'btn-add-cal';
+    addCalBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Legg til kalender`;
+    addCalBtn.onclick = () => addCal(group.id);
+    calsSection.appendChild(addCalBtn);
+
+    card.appendChild(calsSection);
+    container.appendChild(card);
+  });
+}
+
+function addGroup() {
+  const used   = new Set(settings.groups.map(g => g.color));
+  const color  = COLOR_PALETTE.find(c => !used.has(c)) || COLOR_PALETTE[settings.groups.length % COLOR_PALETTE.length];
+  settings.groups.push({
+    id: 'grp_' + Date.now(),
+    name: 'Ny gruppe',
+    color,
+    calendars: [{ name: '', calId: '' }]
+  });
+  saveSettings();
+  applySettings();
+  renderSettings();
+}
+
+function removeGroup(groupId) {
+  if (settings.groups.length <= 1) return;
+  settings.groups = settings.groups.filter(g => g.id !== groupId);
+  saveSettings();
+  applySettings();
+  renderSettings();
+}
+
+function addCal(groupId) {
+  const g = settings.groups.find(g => g.id === groupId);
+  if (!g) return;
+  g.calendars.push({ name: '', calId: '' });
+  saveSettings();
+  renderSettings();
+}
+
+function removeCal(groupId, calIdx) {
+  const g = settings.groups.find(g => g.id === groupId);
+  if (!g || g.calendars.length <= 1) return;
+  g.calendars.splice(calIdx, 1);
+  saveSettings();
+  renderSettings();
+}
+
+function resetSettings() {
+  if (!confirm('Tilbakestille til standardinnstillinger?')) return;
+  settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+  saveSettings();
+  applySettings();
+  renderSettings();
+}
+
 // ===== INIT =====
 (function init() {
+  settings = loadSettings();
+  // Populate MEMBERS/COLORS synchronously before any rendering
+  settings.groups.forEach(g => {
+    MEMBERS.push({ id: g.id, name: g.name, color: g.color });
+    COLORS[g.id] = g.color;
+  });
+
   renderLegend();
   renderCalendar();
   renderTasks();
   renderMeals();
   renderPhotos();
+  renderSettings();
   showTab('calendar');
 })();
 </script>
