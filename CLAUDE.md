@@ -10,6 +10,25 @@ A self-hosted family dashboard (Malik family) running on a Mac Mini, displayed o
 
 ---
 
+## Code quality
+
+All code is automatically linted and tested by GitHub Actions CI on every push. **Lint and tests must pass before any merge.**
+
+```bash
+npm run lint   # ESLint — zero errors required, warnings allowed
+npm test       # Jest — all active test suites must pass
+```
+
+**ESLint** (`eslint.config.js`) covers every `.js` file except `public/` and `data/`. Uses ESLint v10 flat config with `@eslint/js` recommended rules and Node.js + Jest globals.
+
+**Tests** (`tests/`) mirror the API contract in `PROJECT_PLAN.md`. Each test file uses `describe.skip` when the module under test has not been built yet, so the test suite always exits green during partial builds. Once a module is added, its tests activate automatically.
+
+**GitHub Actions** (`.github/workflows/ci.yml`) runs `npm ci → npm run lint → npm test` on Node 20 with an in-memory SQLite database (`DATABASE_PATH=:memory:`).
+
+**server.js must export the Express `app`** without auto-starting (use `if (require.main === module) app.listen(...)`) so that `supertest` can load it in tests without binding a port.
+
+---
+
 ## Running the project
 
 ```bash
