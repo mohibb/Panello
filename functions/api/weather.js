@@ -1,5 +1,9 @@
+function stripSuffix(symbol) {
+  return symbol.replace(/_(day|night|polartwilight)$/, '');
+}
+
 function symbolToIcon(symbol) {
-  const s = symbol.replace(/_(day|night|polartwilight)$/, '').replace(/_/g, '');
+  const s = stripSuffix(symbol).replace(/_/g, '');
   return {
     clearsky: '☀️', fair: '🌤', partlycloudy: '⛅', cloudy: '☁️', fog: '🌫',
     lightrain: '🌦', rain: '🌧', heavyrain: '🌧', sleet: '🌨',
@@ -8,7 +12,7 @@ function symbolToIcon(symbol) {
 }
 
 function symbolToDesc(symbol) {
-  const s = symbol.replace(/_(day|night|polartwilight)$/, '');
+  const s = stripSuffix(symbol);
   return s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, ' ');
 }
 

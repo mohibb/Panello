@@ -11,6 +11,5 @@ export async function onRequestGet({ request }) {
     return Response.json({ error: 'invalid date' }, { status: 400 });
   }
 
-  // Phase 4: integrate Google Calendar
   return Response.json([]);
 }
