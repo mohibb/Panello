@@ -2,30 +2,19 @@
   "name": "panello",
   "version": "0.1.0",
   "description": "Malik family dashboard",
-  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js",
+    "dev": "wrangler pages dev",
     "lint": "eslint .",
-    "test": "jest --forceExit"
-  },
-  "dependencies": {
-    "better-sqlite3": "^12.10.0",
-    "dotenv": "^16.6.1",
-    "express": "^4.22.2",
-    "express-basic-auth": "^1.2.1"
+    "test": "vitest run",
+    "deploy": "wrangler pages deploy public"
   },
   "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.8.5",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.4.0",
     "globals": "^17.6.0",
-    "jest": "^30.4.2",
-    "supertest": "^7.2.2"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/tests/**/*.test.js"
-    ],
-    "forceExit": true
+    "vitest": "^3.2.3",
+    "wrangler": "^3.103.2"
   }
 }

@@ -1,19 +1,34 @@
-'use strict';
+import { describe, test, expect, beforeAll } from 'vitest';
+import { env } from 'cloudflare:test';
+import { onRequestGet } from '../../functions/api/weather.js';
 
-const request = require('supertest');
-const { app, serverReady } = require('../helpers/server');
+const MOCK_WEATHER = {
+  temp: 14,
+  description: 'Partly cloudy day',
+  feelsLike: 11,
+  wind: 5,
+  rain: 0.2,
+  forecast: [
+    { day: 'Thu', icon: '⛅', temp: 12 },
+    { day: 'Fri', icon: '🌧', temp: 10 },
+    { day: 'Sat', icon: '☀️', temp: 16 },
+    { day: 'Sun', icon: '☁️', temp: 13 },
+  ],
+};
 
-const suite = serverReady ? describe : describe.skip;
+describe('GET /api/weather', () => {
+  beforeAll(async () => {
+    await env.CACHE.put('weather', JSON.stringify(MOCK_WEATHER));
+  });
 
-suite('GET /api/weather', () => {
   test('returns 200', async () => {
-    const res = await request(app).get('/api/weather');
+    const res = await onRequestGet({ request: new Request('http://localhost/api/weather'), env });
     expect(res.status).toBe(200);
   });
 
   test('has required top-level fields', async () => {
-    const res = await request(app).get('/api/weather');
-    const { body } = res;
+    const res = await onRequestGet({ request: new Request('http://localhost/api/weather'), env });
+    const body = await res.json();
     expect(typeof body.temp).toBe('number');
     expect(typeof body.description).toBe('string');
     expect(typeof body.feelsLike).toBe('number');
@@ -22,14 +37,16 @@ suite('GET /api/weather', () => {
   });
 
   test('forecast is an array of at least 1 day', async () => {
-    const res = await request(app).get('/api/weather');
-    expect(Array.isArray(res.body.forecast)).toBe(true);
-    expect(res.body.forecast.length).toBeGreaterThanOrEqual(1);
+    const res = await onRequestGet({ request: new Request('http://localhost/api/weather'), env });
+    const body = await res.json();
+    expect(Array.isArray(body.forecast)).toBe(true);
+    expect(body.forecast.length).toBeGreaterThanOrEqual(1);
   });
 
   test('each forecast entry has day, icon, temp', async () => {
-    const res = await request(app).get('/api/weather');
-    for (const day of res.body.forecast) {
+    const res = await onRequestGet({ request: new Request('http://localhost/api/weather'), env });
+    const body = await res.json();
+    for (const day of body.forecast) {
       expect(typeof day.day).toBe('string');
       expect(typeof day.icon).toBe('string');
       expect(typeof day.temp).toBe('number');

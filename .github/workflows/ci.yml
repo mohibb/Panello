@@ -11,14 +11,6 @@ jobs:
     name: Lint & Test
     runs-on: ubuntu-latest
 
-    env:
-      PORT: 3000
-      ADMIN_PASSWORD: ci_test_password
-      FAMILY_NAME: TestFamily
-      LOCATION_LAT: "59.9139"
-      LOCATION_LON: "10.7522"
-      DATABASE_PATH: ":memory:"
-
     steps:
       - uses: actions/checkout@v4
 

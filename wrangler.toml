@@ -1,0 +1,29 @@
+name = "panello"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "panello"
+# Replace after: npx wrangler d1 create panello
+database_id = "ffffffff-ffff-ffff-ffff-ffffffffffff"
+
+[[kv_namespaces]]
+binding = "CACHE"
+# Replace after: npx wrangler kv namespace create CACHE
+id         = "ffffffffffffffffffffffffffffffff"
+preview_id = "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+
+[vars]
+FAMILY_NAME    = "Malik"
+LOCATION_LAT   = "59.9139"
+LOCATION_LON   = "10.7522"
+# Override in Cloudflare Pages dashboard (Settings > Environment Variables) for production.
+ADMIN_PASSWORD = "ci_test_password"
+
+# Production-only secrets — set in Cloudflare Pages dashboard as encrypted env vars:
+#   GOOGLE_CLIENT_ID
+#   GOOGLE_CLIENT_SECRET
+#   GOOGLE_REDIRECT_URI
+#   CAL_MOHIBB / CAL_SAFFA / CAL_FAMILY
+#   PHOTOS_ALBUM_ID

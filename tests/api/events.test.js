@@ -1,32 +1,39 @@
-'use strict';
+import { describe, test, expect } from 'vitest';
+import { env } from 'cloudflare:test';
+import { onRequestGet } from '../../functions/api/events.js';
 
-const request = require('supertest');
-const { app, serverReady } = require('../helpers/server');
+const WEEK = '2026-05-18';
 
-const suite = serverReady ? describe : describe.skip;
+function get(search = '') {
+  return onRequestGet({
+    request: new Request(`http://localhost/api/events${search}`),
+    env,
+    params: {},
+  });
+}
 
-suite('GET /api/events', () => {
-  const WEEK = '2026-05-18'; // a known Monday
-
+describe('GET /api/events', () => {
   test('returns 400 when week param is missing', async () => {
-    const res = await request(app).get('/api/events');
+    const res = await get();
     expect(res.status).toBe(400);
   });
 
   test('returns 400 for an invalid week value', async () => {
-    const res = await request(app).get('/api/events?week=not-a-date');
+    const res = await get('?week=not-a-date');
     expect(res.status).toBe(400);
   });
 
   test('returns 200 with an array for a valid Monday', async () => {
-    const res = await request(app).get(`/api/events?week=${WEEK}`);
+    const res = await get(`?week=${WEEK}`);
     expect(res.status).toBe(200);
-    expect(Array.isArray(res.body)).toBe(true);
+    const body = await res.json();
+    expect(Array.isArray(body)).toBe(true);
   });
 
   test('each event has required fields', async () => {
-    const res = await request(app).get(`/api/events?week=${WEEK}`);
-    for (const ev of res.body) {
+    const res = await get(`?week=${WEEK}`);
+    const body = await res.json();
+    for (const ev of body) {
       expect(typeof ev.date).toBe('string');
       expect(ev.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(typeof ev.time).toBe('string');
@@ -37,12 +44,12 @@ suite('GET /api/events', () => {
   });
 
   test('all returned events fall within the requested week', async () => {
-    const res = await request(app).get(`/api/events?week=${WEEK}`);
+    const res = await get(`?week=${WEEK}`);
+    const body = await res.json();
     const start = new Date(WEEK);
-    const end   = new Date(WEEK);
+    const end = new Date(WEEK);
     end.setDate(end.getDate() + 6);
-
-    for (const ev of res.body) {
+    for (const ev of body) {
       const d = new Date(ev.date);
       expect(d >= start).toBe(true);
       expect(d <= end).toBe(true);

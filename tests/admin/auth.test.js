@@ -1,29 +1,31 @@
-'use strict';
+import { describe, test, expect } from 'vitest';
+import { env } from 'cloudflare:test';
+import { onRequest } from '../../functions/admin/_middleware.js';
+import { onRequestGet } from '../../functions/admin/index.js';
 
-const request = require('supertest');
-const { app, serverReady } = require('../helpers/server');
+const PASSWORD = 'ci_test_password';
 
-const suite = serverReady ? describe : describe.skip;
+function makeCtx(authHeader) {
+  const headers = new Headers();
+  if (authHeader) headers.set('Authorization', authHeader);
+  const request = new Request('http://localhost/admin', { headers });
+  const next = () => onRequestGet({ request, env });
+  return { request, env, next };
+}
 
-suite('Admin auth', () => {
-  const PASSWORD = process.env.ADMIN_PASSWORD || 'ci_test_password';
-
+describe('Admin auth', () => {
   test('GET /admin returns 401 with no credentials', async () => {
-    const res = await request(app).get('/admin');
+    const res = await onRequest(makeCtx(null));
     expect(res.status).toBe(401);
   });
 
   test('GET /admin returns 401 with wrong password', async () => {
-    const res = await request(app)
-      .get('/admin')
-      .auth('admin', 'wrong_password');
+    const res = await onRequest(makeCtx('Basic ' + btoa('admin:wrong_password')));
     expect(res.status).toBe(401);
   });
 
   test('GET /admin returns 200 with correct password', async () => {
-    const res = await request(app)
-      .get('/admin')
-      .auth('admin', PASSWORD);
+    const res = await onRequest(makeCtx('Basic ' + btoa(`admin:${PASSWORD}`)));
     expect(res.status).toBe(200);
   });
 });
