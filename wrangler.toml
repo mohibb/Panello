@@ -21,9 +21,12 @@ LOCATION_LON   = "10.7522"
 # Override in Cloudflare Pages dashboard (Settings > Environment Variables) for production.
 ADMIN_PASSWORD = "ci_test_password"
 
+# Google OAuth redirect URI for local dev — must match a URI registered in Google Cloud Console.
+# Override in Cloudflare Pages dashboard for production (e.g. https://panello.pages.dev/auth/callback).
+GOOGLE_REDIRECT_URI = "http://localhost:8787/auth/callback"
+
 # Production-only secrets — set in Cloudflare Pages dashboard as encrypted env vars:
 #   GOOGLE_CLIENT_ID
 #   GOOGLE_CLIENT_SECRET
-#   GOOGLE_REDIRECT_URI
 #   CAL_MOHIBB / CAL_SAFFA / CAL_FAMILY
 #   PHOTOS_ALBUM_ID

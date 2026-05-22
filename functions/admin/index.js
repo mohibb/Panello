@@ -38,10 +38,23 @@ const ADMIN_HTML = `<!DOCTYPE html>
     .week-nav span { font-size: 0.9rem; color: #a0a8c0; min-width: 160px; text-align: center; }
     .save-row { margin-top: 1rem; display: flex; justify-content: flex-end; gap: 0.5rem; }
     #status { font-size: 0.85rem; color: #48B368; display: none; }
+    .cal-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;
+               border-bottom: 1px solid #2e3347; }
+    .cal-row:last-child { border-bottom: none; }
+    .cal-row .member { flex: 1; font-size: 0.9rem; }
+    .cal-badge { font-size: 0.78rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600; }
+    .cal-badge.ok { background: #1a3a26; color: #48B368; }
+    .cal-badge.missing { background: #3a1a1a; color: #c0392b; }
+    .cal-badge.unconfigured { background: #2a2a1a; color: #888; }
   </style>
 </head>
 <body>
   <h1>Panello Admin</h1>
+
+  <section id="calendar-section">
+    <h2>Google Calendar</h2>
+    <div id="cal-status-list"><p style="color:#555e78;font-size:.85rem">Loading…</p></div>
+  </section>
 
   <section id="tasks-section">
     <h2>Tasks</h2>
@@ -187,6 +200,50 @@ const ADMIN_HTML = `<!DOCTYPE html>
       if (e.key === 'Enter') addTask();
     });
 
+    async function loadCalendarStatus() {
+      const res = await fetch('/api/calendar-status');
+      if (!res.ok) { return; }
+      const items = await res.json();
+      const container = document.getElementById('cal-status-list');
+      container.innerHTML = items.map(({ member, authorized, calendarConfigured }) => {
+        const name = member.charAt(0).toUpperCase() + member.slice(1);
+        let badge, action;
+        if (!calendarConfigured) {
+          badge = \`<span class="cal-badge unconfigured">No calendar ID set</span>\`;
+          action = '';
+        } else if (authorized) {
+          badge = \`<span class="cal-badge ok">Authorized</span>\`;
+          action = \`<a href="/auth/google?member=\${member}"><button class="secondary">Re-authorize</button></a>\`;
+        } else {
+          badge = \`<span class="cal-badge missing">Not authorized</span>\`;
+          action = \`<a href="/auth/google?member=\${member}"><button>Authorize</button></a>\`;
+        }
+        return \`<div class="cal-row">
+          <span class="member">\${name}</span>
+          \${badge}
+          \${action}
+        </div>\`;
+      }).join('');
+
+      const authorized = document.getElementById('cal-status-list').dataset.authorized;
+      if (authorized) {
+        const banner = document.createElement('p');
+        banner.style.cssText = 'color:#48B368;font-size:.85rem;margin-bottom:.75rem';
+        banner.textContent = \`✓ \${authorized} authorized successfully\`;
+        container.parentElement.insertBefore(banner, container);
+      }
+    }
+
+    const params = new URLSearchParams(location.search);
+    if (params.has('authorized')) {
+      const banner = document.createElement('p');
+      banner.style.cssText = 'color:#48B368;font-size:.85rem;margin-bottom:1rem';
+      banner.textContent = '✓ ' + params.get('authorized') + ' authorized successfully';
+      document.querySelector('h1').after(banner);
+      history.replaceState({}, '', '/admin');
+    }
+
+    loadCalendarStatus();
     loadTasks();
     loadMeals();
   </script>
