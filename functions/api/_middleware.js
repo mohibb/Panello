@@ -9,18 +9,29 @@ function parseCookie(header) {
 }
 
 export async function onRequest({ request, next, env, data }) {
-  // Session cookie (dashboard users)
   const cookies = parseCookie(request.headers.get('Cookie'));
-  const token = cookies.panello_session;
-  if (token) {
-    const session = await env.CACHE.get(`session_${token}`, 'json');
+
+  // Session cookie (dashboard users via Google OAuth)
+  const sessionToken = cookies.panello_session;
+  if (sessionToken) {
+    const session = await env.CACHE.get(`session_${sessionToken}`, 'json');
     if (session) {
       data.user = session;
       return next();
     }
   }
 
-  // Admin Basic Auth fallback — allows admin page to reach /api/tasks and /api/meals
+  // Admin session cookie (issued by /admin middleware after Basic Auth)
+  const adminToken = cookies.panello_admin;
+  if (adminToken) {
+    const valid = await env.CACHE.get(`admin_session_${adminToken}`);
+    if (valid) {
+      data.user = { userId: '__admin__', email: 'admin', name: 'Admin' };
+      return next();
+    }
+  }
+
+  // Direct Basic Auth fallback (curl, scripts, or browsers that send it explicitly)
   const auth = request.headers.get('Authorization') || '';
   const [scheme, encoded] = auth.split(' ');
   if (scheme === 'Basic' && encoded) {

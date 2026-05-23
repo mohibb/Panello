@@ -1146,6 +1146,13 @@ function showLoginScreen() {
   document.getElementById('app').style.display = 'none';
 }
 
+// Wraps fetch and redirects to login on 401 (handles session expiry)
+async function apiFetch(url, opts) {
+  const res = await fetch(url, opts).catch(() => null);
+  if (res && res.status === 401) { showLoginScreen(); return null; }
+  return res;
+}
+
 async function logout() {
   await fetch('/auth/logout', { method: 'POST' });
   location.href = '/';
@@ -1209,9 +1216,10 @@ async function changeWeek(delta) {
   weekStart = addDays(weekStart, delta * 7);
   const weekISO = toISO(weekStart);
   const [evRes, mlRes] = await Promise.all([
-    fetch(`/api/events?week=${weekISO}`),
-    fetch(`/api/meals?week=${weekISO}`),
+    apiFetch(`/api/events?week=${weekISO}`),
+    apiFetch(`/api/meals?week=${weekISO}`),
   ]);
+  if (!evRes || !mlRes) return;
   EVENTS_DATA = await evRes.json().catch(() => []);
   MEALS_DATA  = await mlRes.json().catch(() => []);
   renderCalendar();
@@ -1350,7 +1358,7 @@ function renderTasks() {
       item.innerHTML = `<div class="task-check"></div><span class="task-text">${task.title}</span>`;
       item.onclick = async () => {
         const newDone = !task.done;
-        await fetch(`/api/tasks/${task.id}`, {
+        await apiFetch(`/api/tasks/${task.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ done: newDone }),
@@ -1640,10 +1648,11 @@ async function init() {
   setInterval(async () => {
     const wk = toISO(weekStart);
     const [evRes, tkRes, mlRes] = await Promise.all([
-      fetch(`/api/events?week=${wk}`),
-      fetch('/api/tasks'),
-      fetch(`/api/meals?week=${wk}`),
+      apiFetch(`/api/events?week=${wk}`),
+      apiFetch('/api/tasks'),
+      apiFetch(`/api/meals?week=${wk}`),
     ]);
+    if (!evRes || !tkRes || !mlRes) return; // 401 → login screen shown by apiFetch
     EVENTS_DATA = await evRes.json().catch(() => EVENTS_DATA);
     TASKS_DATA  = await tkRes.json().catch(() => TASKS_DATA);
     MEALS_DATA  = await mlRes.json().catch(() => MEALS_DATA);
