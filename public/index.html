@@ -848,9 +848,95 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
     .btn-reset:hover { background: rgba(255,59,48,0.05); }
+
+    /* ===== LOGIN SCREEN ===== */
+    #login-screen {
+      display: none;
+      position: fixed; inset: 0;
+      background: #F0F2F5;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .login-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 48px 44px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      max-width: 360px;
+      width: 100%;
+    }
+    .login-logo {
+      width: 64px; height: 64px;
+      border-radius: 16px;
+      background: #1C1C1E;
+      color: #fff;
+      font-size: 28px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .login-card h1 { font-size: 1.6rem; font-weight: 700; color: #1A1A1A; margin-bottom: 6px; }
+    .login-card p  { font-size: 0.9rem; color: #6E6E73; margin-bottom: 28px; }
+    .btn-google {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #fff; color: #1A1A1A;
+      border: 1.5px solid #D1D1D6;
+      border-radius: 10px;
+      padding: 11px 22px;
+      font-size: 0.95rem; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      font-family: inherit;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-google:hover { background: #F5F5F7; border-color: #B0B0B8; }
+    .btn-google svg { flex-shrink: 0; }
+
+    /* ===== LOGOUT BUTTON ===== */
+    .btn-logout {
+      width: 56px; height: 44px;
+      border-radius: 12px; border: none;
+      background: transparent; color: #636366;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, color 0.15s;
+      margin-top: 4px;
+    }
+    .btn-logout:hover { background: #2C2C2E; color: #FF453A; }
+
+    /* ===== SETTINGS — AVAILABLE CALENDARS PICKER ===== */
+    .cal-picker-row { display: flex; gap: 0.4rem; margin-top: 0.5rem; align-items: center; }
+    select.cal-select {
+      flex: 1; background: #F5F5F7; border: 1.5px solid #D1D1D6;
+      border-radius: 8px; padding: 0.4rem 0.6rem; font-size: 0.82rem;
+      color: #1A1A1A; font-family: inherit; cursor: pointer;
+    }
+    .btn-add-cal-confirm {
+      background: #1C1C1E; color: #fff; border: none; border-radius: 8px;
+      padding: 0.4rem 0.9rem; font-size: 0.82rem; cursor: pointer; white-space: nowrap;
+    }
+    .btn-add-cal-confirm:hover { background: #3A3A3C; }
+    .cal-entry-name { font-size: 0.82rem; color: #3C3C43; flex: 1; }
+    .settings-empty { font-size: 0.88rem; color: #8E8E93; text-align: center; padding: 2rem 0; }
+    .google-status { font-size: 0.82rem; margin-bottom: 1rem; }
+    .google-status a { color: #3D8EE8; }
   </style>
 </head>
 <body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">P</div>
+    <h1>Panello</h1>
+    <p>Logg inn for å se dashbordet ditt</p>
+    <a href="/auth/google" class="btn-google">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Fortsett med Google
+    </a>
+  </div>
+</div>
+
 <div id="app">
 
   <!-- SIDEBAR -->
@@ -903,6 +989,13 @@
       <div class="clock-time" id="clock-time">--:--</div>
       <div class="clock-date" id="clock-date"></div>
     </div>
+    <button class="btn-logout" title="Logg ut" onclick="logout()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+    </button>
   </nav>
 
   <!-- MAIN CONTENT -->
@@ -980,8 +1073,9 @@
         <div class="settings-section-head">
           <div class="settings-section-label">Kalendergrupper</div>
           <div class="settings-section-desc">
-            Hvert gruppe vises som én rad i kalendervisningen. Du kan legge til flere Google-kalendere per gruppe — de slås sammen til én farge. Google Kalender-ID-er kobles til i fase 4.
+            Hvert gruppe vises som én farge i kalendervisningen. Koble til Google-kalendere per gruppe.
           </div>
+          <div id="google-status" class="google-status"></div>
         </div>
         <div id="settings-groups"></div>
         <button class="btn-add-group" onclick="addGroup()">
@@ -999,133 +1093,27 @@
   </main>
 </div>
 
+
 <script>
-// ===== SETTINGS MODEL =====
-const DEFAULT_SETTINGS = {
-  groups: [
-    { id:'mohibb', name:'Mohibb', color:'#3D8EE8', calendars:[{ name:'Mohibb', calId:'' }] },
-    { id:'saffa',  name:'Saffa',  color:'#E8607A', calendars:[{ name:'Saffa',  calId:'' }] },
-    { id:'jonas',  name:'Jonas',  color:'#F0A500', calendars:[{ name:'Jonas',  calId:'' }] },
-    { id:'noah',   name:'Noah',   color:'#48B368', calendars:[{ name:'Noah',   calId:'' }] },
-    { id:'family', name:'Familie',color:'#8B6FD4', calendars:[{ name:'Familie',calId:'' }] },
-  ]
-};
-
-let settings;
-
-function loadSettings() {
-  try {
-    const s = localStorage.getItem('panello_settings');
-    if (s) return JSON.parse(s);
-  } catch(e) {}
-  return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
-}
-
-function saveSettings() {
-  localStorage.setItem('panello_settings', JSON.stringify(settings));
-}
-
-// Rebuild MEMBERS/COLORS from settings and re-render live views
-function applySettings() {
-  MEMBERS.length = 0;
-  Object.keys(COLORS).forEach(k => delete COLORS[k]);
-  settings.groups.forEach(g => {
-    MEMBERS.push({ id: g.id, name: g.name, color: g.color });
-    COLORS[g.id] = g.color;
-  });
-  renderLegend();
-  renderCalendar();
-}
-
-let saveTimer = null;
-function queueSave() {
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => { saveSettings(); applySettings(); }, 350);
-}
-
-// ===== DERIVED STATE (populated from settings on init) =====
+// ===== STATE =====
+let currentUser = null;
+let weekStart = getMonday(new Date());
+let activeTab = 'calendar';
 let MEMBERS = [];
-let COLORS  = {};
+let COLORS = {};
+let EVENTS_DATA = [];
+let TASKS_DATA = [];
+let MEALS_DATA = [];
+let GROUPS = [];
+let availableCalendars = null;
 
 // ===== CONSTANTS =====
 const DAY_SHORT   = ['Man','Tir','Ons','Tor','Fre','Lør','Søn'];
 const MONTH_SHORT = ['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'];
-
+const COLOR_PALETTE = ['#E84040','#E87D40','#DDB033','#48B368','#3D8EE8','#7B5CE5','#E86097','#00B5B8'];
 const H_START = 6;
 const H_END   = 24;
 const H_TOTAL = H_END - H_START;
-
-// ===== MOCK DATA =====
-const EVENTS = [
-  { date:'2026-05-18', time:'08:30', end:'09:00', title:'Standmøte',         person:'mohibb' },
-  { date:'2026-05-18', time:'12:00', end:'13:00', title:'Jobblunsj',          person:'mohibb' },
-  { date:'2026-05-18', time:'14:00', end:'15:00', title:'Yoga',               person:'saffa'  },
-  { date:'2026-05-19', time:'07:00', end:'08:00', title:'Morgenya',            person:'saffa'  },
-  { date:'2026-05-19', time:'09:00', end:'10:00', title:'Teammøte',           person:'mohibb' },
-  { date:'2026-05-19', time:'15:00', end:'15:30', title:'Hent Jonas',         person:'saffa'  },
-  { date:'2026-05-20', time:'10:00', end:'11:30', title:'Presentasjon Q2',    person:'mohibb' },
-  { date:'2026-05-20', time:'14:30', end:'15:00', title:'Tannlege Noah',      person:'saffa'  },
-  { date:'2026-05-20', time:'17:00', end:'18:30', title:'Fotballtrening',     person:'jonas'  },
-  { date:'2026-05-21', time:'09:00', end:'10:00', title:'1:1 møte',           person:'mohibb' },
-  { date:'2026-05-21', time:'19:00', end:'21:00', title:'Middag venner',      person:'family' },
-  { date:'2026-05-22', time:'08:30', end:'09:00', title:'Standmøte',          person:'mohibb' },
-  { date:'2026-05-22', time:'16:00', end:'17:00', title:'Barnebursdag Noah',  person:'noah'   },
-  { date:'2026-05-23', time:'10:00', end:'11:30', title:'Fotballkamp',        person:'jonas'  },
-  { date:'2026-05-23', time:'14:00', end:'17:00', title:'Bursdagsselskap',    person:'noah'   },
-  { date:'2026-05-24', time:'11:00', end:'14:00', title:'Familiemiddag',      person:'family' },
-];
-
-const TASKS = [
-  { owner:'shared', items:[
-    { text:'Kjøp bursdagsgave til Amina', done:false },
-    { text:'Bestill sommerferie',          done:false },
-  ]},
-  { owner:'mohibb', items:[
-    { text:'Sjekk strømavtale',  done:false },
-    { text:'Bil til service',    done:false },
-    { text:'Bestill time lege',  done:true  },
-  ]},
-  { owner:'saffa', items:[
-    { text:'Tannlege time for Jonas', done:false },
-    { text:'Handle inn helgepakker',  done:false },
-  ]},
-  { owner:'jonas', items:[
-    { text:'Rydd rommet',       done:true  },
-    { text:'Øv på matteprøven', done:false },
-  ]},
-  { owner:'noah', items:[
-    { text:'Pakk idrettsveske', done:false },
-  ]},
-];
-
-const MEALS = [
-  { date:'2026-05-18', lunch:'Rester fra helgen',   dinner:'Pasta bolognese'   },
-  { date:'2026-05-19', lunch:null,                   dinner:'Taco'              },
-  { date:'2026-05-20', lunch:'Sandwich',             dinner:'Kyllingsuppe'      },
-  { date:'2026-05-21', lunch:null,                   dinner:'Pizza'             },
-  { date:'2026-05-22', lunch:null,                   dinner:'Laks med poteter'  },
-  { date:'2026-05-23', lunch:'Brunch hjemme',        dinner:'Burger'            },
-  { date:'2026-05-24', lunch:null,                   dinner:'Søndagsmiddag'     },
-];
-
-const PHOTOS = [
-  { cap:'Sørmarka · Aug 2024',   bg:'linear-gradient(135deg,#667eea,#764ba2)' },
-  { cap:'Hyttetur · Des 2024',   bg:'linear-gradient(135deg,#f093fb,#f5576c)' },
-  { cap:'Påske · Apr 2025',      bg:'linear-gradient(135deg,#4facfe,#00f2fe)' },
-  { cap:'Bursdagen · Feb 2025',  bg:'linear-gradient(135deg,#43e97b,#38f9d7)' },
-  { cap:'Oslo · Mar 2025',       bg:'linear-gradient(135deg,#fa709a,#fee140)' },
-  { cap:'Strandtur · Jul 2024',  bg:'linear-gradient(135deg,#a1c4fd,#c2e9fb)' },
-  { cap:'Ski · Jan 2025',        bg:'linear-gradient(135deg,#30cfd0,#330867)' },
-  { cap:'Grillkveld · Jun 2024', bg:'linear-gradient(135deg,#f7971e,#ffd200)' },
-  { cap:'Fotballkamp · Sep 2024',bg:'linear-gradient(135deg,#4776e6,#8e54e9)' },
-  { cap:'Jul · Des 2024',        bg:'linear-gradient(135deg,#ee0979,#ff6a00)' },
-  { cap:'Konsert · Oct 2024',    bg:'linear-gradient(135deg,#1d976c,#93f9b9)' },
-  { cap:'Fjelltur · Aug 2024',   bg:'linear-gradient(135deg,#373b44,#4286f4)' },
-];
-
-// ===== STATE =====
-let weekStart = getMonday(new Date());
-let activeTab = 'calendar';
 
 // ===== UTILS =====
 function getMonday(d) {
@@ -1135,22 +1123,33 @@ function getMonday(d) {
   date.setHours(0, 0, 0, 0);
   return date;
 }
-
-function addDays(date, n) {
-  const d = new Date(date);
-  d.setDate(d.getDate() + n);
-  return d;
-}
-
+function addDays(date, n) { const d = new Date(date); d.setDate(d.getDate() + n); return d; }
 function toISO(d) { return d.toISOString().slice(0, 10); }
 function pad(n)   { return String(n).padStart(2, '0'); }
-
+function todayISO() { return toISO(new Date()); }
 function timeFrac(t) {
+  if (!t) return 0;
   const [h, m] = t.split(':').map(Number);
   return (h - H_START + m / 60) / H_TOTAL;
 }
 
-function todayISO() { return toISO(new Date()); }
+// ===== AUTH =====
+async function checkAuth() {
+  const res = await fetch('/api/user').catch(() => null);
+  if (!res || res.status === 401) { showLoginScreen(); return false; }
+  currentUser = await res.json();
+  return true;
+}
+
+function showLoginScreen() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+}
+
+async function logout() {
+  await fetch('/auth/logout', { method: 'POST' });
+  location.href = '/';
+}
 
 // ===== CLOCK =====
 function tickClock() {
@@ -1160,13 +1159,11 @@ function tickClock() {
   document.getElementById('clock-date').textContent =
     DAY_SHORT[dow] + ' ' + now.getDate() + '. ' + MONTH_SHORT[now.getMonth()];
 }
-
 setInterval(tickClock, 1000);
 tickClock();
 
 // ===== TAB SWITCHING =====
 const TABS = ['calendar', 'tasks', 'meals', 'photos', 'settings'];
-
 function showTab(tab) {
   activeTab = tab;
   TABS.forEach(t => {
@@ -1174,6 +1171,7 @@ function showTab(tab) {
     document.getElementById('nav-' + t).classList.toggle('active', t === tab);
   });
   if (tab === 'calendar') requestAnimationFrame(scaleGrid);
+  if (tab === 'settings' && !GROUPS.length) loadGroups();
 }
 
 // ===== LEGEND =====
@@ -1188,10 +1186,36 @@ function renderLegend() {
   });
 }
 
+// ===== WEATHER =====
+async function loadWeather() {
+  const res = await fetch('/api/weather').catch(() => null);
+  if (!res || !res.ok) return;
+  const w = await res.json();
+  const widget = document.querySelector('.weather-widget');
+  if (!widget) return;
+  widget.querySelector('.weather-temp').textContent = w.temp + '°';
+  widget.querySelector('.weather-desc').textContent = w.description;
+  const meta = widget.querySelector('.weather-meta');
+  meta.innerHTML =
+    `<span>Føles som ${w.feelsLike}°</span><span>Vind ${w.wind} m/s</span><span>Nedbør ${w.rain} mm</span>`;
+  const fc = widget.querySelector('.weather-forecast');
+  fc.innerHTML = (w.forecast || []).map(d =>
+    `<div class="forecast-day"><span class="fc-name">${d.day}</span><span class="fc-icon">${d.icon}</span><span class="fc-temp">${d.temp}°</span></div>`
+  ).join('');
+}
+
 // ===== CALENDAR =====
-function changeWeek(delta) {
+async function changeWeek(delta) {
   weekStart = addDays(weekStart, delta * 7);
+  const weekISO = toISO(weekStart);
+  const [evRes, mlRes] = await Promise.all([
+    fetch(`/api/events?week=${weekISO}`),
+    fetch(`/api/meals?week=${weekISO}`),
+  ]);
+  EVENTS_DATA = await evRes.json().catch(() => []);
+  MEALS_DATA  = await mlRes.json().catch(() => []);
   renderCalendar();
+  renderMeals();
 }
 
 function renderCalendar() {
@@ -1238,20 +1262,21 @@ function renderCalendar() {
       line.className = 'hour-line';
       line.style.top = (h / H_TOTAL * 100) + '%';
       col.appendChild(line);
-
       const half = document.createElement('div');
       half.className = 'half-line';
       half.style.top = ((h + 0.5) / H_TOTAL * 100) + '%';
       col.appendChild(half);
     }
 
-    EVENTS.filter(e => e.date === iso).forEach(ev => {
-      const top    = timeFrac(ev.time);
-      const height = timeFrac(ev.end) - top;
+    EVENTS_DATA.filter(e => e.date === iso).forEach(ev => {
+      const top    = ev.allDay ? 0 : timeFrac(ev.time);
+      const height = ev.allDay ? 0 : timeFrac(ev.end) - top;
       const el = document.createElement('div');
-      el.className = 'cal-event';
-      el.style.cssText = `top:${top*100}%;height:${Math.max(height*100,1.5)}%;background:${COLORS[ev.person]||'#8E8E93'};`;
-      el.innerHTML = `<div class="ev-title">${ev.title}</div><div class="ev-time">${ev.time}–${ev.end}</div>`;
+      el.className = 'cal-event' + (ev.allDay ? ' cal-event-allday' : '');
+      el.style.cssText = `top:${top*100}%;height:${ev.allDay ? 3 : Math.max(height*100, 1.5)}%;background:${COLORS[ev.person]||'#8E8E93'};`;
+      el.innerHTML = ev.allDay
+        ? `<div class="ev-title">${ev.title}</div>`
+        : `<div class="ev-title">${ev.title}</div><div class="ev-time">${ev.time}–${ev.end}</div>`;
       col.appendChild(el);
     });
 
@@ -1266,7 +1291,6 @@ function renderCalendar() {
         col.appendChild(line);
       }
     }
-
     grid.appendChild(col);
   });
 
@@ -1289,11 +1313,21 @@ function renderTasks() {
   const list = document.getElementById('tasks-list');
   list.innerHTML = '';
 
-  TASKS.forEach(group => {
-    const member    = MEMBERS.find(m => m.id === group.owner);
-    const color     = member ? member.color : '#8E8E93';
-    const name      = member ? member.name  : 'Felles';
-    const remaining = group.items.filter(t => !t.done).length;
+  const grouped = {};
+  TASKS_DATA.forEach(t => {
+    if (!grouped[t.owner]) grouped[t.owner] = [];
+    grouped[t.owner].push(t);
+  });
+
+  const ownerOrder = ['shared', ...MEMBERS.map(m => m.id)];
+  const owners = [...new Set([...ownerOrder, ...Object.keys(grouped)])].filter(o => grouped[o]);
+
+  owners.forEach(owner => {
+    const tasks  = grouped[owner];
+    const member = MEMBERS.find(m => m.id === owner);
+    const color  = member ? member.color : '#8E8E93';
+    const name   = member ? member.name : owner === 'shared' ? 'Felles' : owner;
+    const remaining = tasks.filter(t => !t.done).length;
 
     const section = document.createElement('div');
     section.className = 'task-group';
@@ -1303,22 +1337,28 @@ function renderTasks() {
     header.innerHTML = `
       <div class="tg-dot" style="background:${color}"></div>
       <span class="tg-name">${name}</span>
-      <span class="tg-count">${remaining} gjenstår</span>
+      <span class="tg-count" id="tc-${owner}">${remaining} gjenstår</span>
     `;
     section.appendChild(header);
 
     const card = document.createElement('div');
     card.className = 'task-card';
 
-    group.items.forEach(task => {
+    tasks.forEach(task => {
       const item = document.createElement('div');
       item.className = 'task-item' + (task.done ? ' done' : '');
-      item.innerHTML = `<div class="task-check"></div><span class="task-text">${task.text}</span>`;
-      item.onclick = () => {
-        task.done = !task.done;
-        item.classList.toggle('done', task.done);
-        header.querySelector('.tg-count').textContent =
-          group.items.filter(t => !t.done).length + ' gjenstår';
+      item.innerHTML = `<div class="task-check"></div><span class="task-text">${task.title}</span>`;
+      item.onclick = async () => {
+        const newDone = !task.done;
+        await fetch(`/api/tasks/${task.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ done: newDone }),
+        });
+        task.done = newDone;
+        item.classList.toggle('done', newDone);
+        const cnt = document.getElementById('tc-' + owner);
+        if (cnt) cnt.textContent = tasks.filter(t => !t.done).length + ' gjenstår';
       };
       card.appendChild(item);
     });
@@ -1326,13 +1366,16 @@ function renderTasks() {
     section.appendChild(card);
     list.appendChild(section);
   });
+
+  if (!owners.length) {
+    list.innerHTML = '<p style="color:#8E8E93;padding:2rem 0;text-align:center">Ingen oppgaver</p>';
+  }
 }
 
 // ===== MEALS =====
 function renderMeals() {
   const today = todayISO();
   const days  = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
-
   const a = days[0], b = days[6];
   document.getElementById('meals-sub').textContent =
     a.getDate() + '. ' + MONTH_SHORT[a.getMonth()] + ' – ' +
@@ -1344,7 +1387,7 @@ function renderMeals() {
   days.forEach((d, i) => {
     const iso     = toISO(d);
     const isToday = iso === today;
-    const meal    = MEALS.find(m => m.date === iso) || {};
+    const meal    = MEALS_DATA.find(m => m.date === iso) || {};
 
     const card = document.createElement('div');
     card.className = 'meal-card' + (isToday ? ' is-today' : '');
@@ -1370,64 +1413,82 @@ function renderMeals() {
 
 // ===== PHOTOS =====
 function renderPhotos() {
-  const grid = document.getElementById('photos-grid');
-  grid.innerHTML = '';
-  PHOTOS.forEach(p => {
-    const item = document.createElement('div');
-    item.className = 'photo-item';
-    item.innerHTML = `<div class="photo-bg" style="background:${p.bg}"></div><div class="photo-cap">${p.cap}</div>`;
-    grid.appendChild(item);
-  });
+  document.getElementById('photos-grid').innerHTML =
+    '<p style="color:#8E8E93;padding:2rem;text-align:center">Bilder ikke konfigurert ennå</p>';
 }
 
 // ===== SETTINGS =====
-const COLOR_PALETTE = ['#E84040','#E87D40','#DDB033','#48B368','#3D8EE8','#7B5CE5','#E86097','#00B5B8'];
+async function loadGroups() {
+  const res = await fetch('/api/groups').catch(() => null);
+  if (!res || !res.ok) return;
+  GROUPS = await res.json();
+  renderSettings();
+  loadAvailableCalendars();
+}
+
+async function loadAvailableCalendars() {
+  const res = await fetch('/api/available-calendars').catch(() => null);
+  if (!res) return;
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    if (data.needsAuth) {
+      document.getElementById('google-status').innerHTML =
+        `<a href="/auth/google">Koble til Google-konto på nytt</a>`;
+    }
+    return;
+  }
+  availableCalendars = await res.json();
+  renderSettings();
+}
 
 function renderSettings() {
   const container = document.getElementById('settings-groups');
   container.innerHTML = '';
 
-  settings.groups.forEach(group => {
+  if (!GROUPS.length) {
+    container.innerHTML = '<div class="settings-empty">Ingen grupper ennå. Klikk «Legg til ny gruppe» for å starte.</div>';
+    return;
+  }
+
+  GROUPS.forEach(group => {
     const card = document.createElement('div');
     card.className = 'group-card';
 
-    // Header row: color picker + name + delete
     const headerRow = document.createElement('div');
     headerRow.className = 'group-header-row';
 
     const colorInput = document.createElement('input');
-    colorInput.type  = 'color';
-    colorInput.className = 'color-picker';
-    colorInput.value = group.color;
-    colorInput.title = 'Velg farge';
-    colorInput.oninput = e => {
+    colorInput.type = 'color'; colorInput.className = 'color-picker';
+    colorInput.value = group.color; colorInput.title = 'Velg farge';
+    colorInput.onchange = async e => {
       group.color = e.target.value;
-      queueSave();
+      await patchGroup(group.id, { color: group.color });
+      applyMembersFromGroups(); renderLegend(); renderCalendar();
     };
 
     const nameInput = document.createElement('input');
-    nameInput.type  = 'text';
-    nameInput.className = 'group-name-input';
-    nameInput.value = group.name;
-    nameInput.placeholder = 'Gruppenavn';
+    nameInput.type = 'text'; nameInput.className = 'group-name-input';
+    nameInput.value = group.name; nameInput.placeholder = 'Gruppenavn';
+    let nameTimer = null;
     nameInput.oninput = e => {
       group.name = e.target.value;
-      queueSave();
+      clearTimeout(nameTimer);
+      nameTimer = setTimeout(async () => {
+        await patchGroup(group.id, { name: group.name });
+        applyMembersFromGroups(); renderLegend();
+      }, 500);
     };
 
     const deleteBtn = document.createElement('button');
-    deleteBtn.className = 'btn-delete-group';
-    deleteBtn.title = 'Slett gruppe';
-    deleteBtn.disabled = settings.groups.length <= 1;
+    deleteBtn.className = 'btn-delete-group'; deleteBtn.title = 'Slett gruppe';
     deleteBtn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>`;
-    deleteBtn.onclick = () => removeGroup(group.id);
+    deleteBtn.onclick = () => deleteGroup(group.id);
 
     headerRow.appendChild(colorInput);
     headerRow.appendChild(nameInput);
     headerRow.appendChild(deleteBtn);
     card.appendChild(headerRow);
 
-    // Calendars sub-section
     const calsSection = document.createElement('div');
     calsSection.className = 'group-cals';
 
@@ -1436,111 +1497,163 @@ function renderSettings() {
     calsLabel.textContent = 'Kalendere i denne gruppen';
     calsSection.appendChild(calsLabel);
 
-    group.calendars.forEach((cal, ci) => {
+    (group.calendars || []).forEach(cal => {
       const row = document.createElement('div');
       row.className = 'cal-entry';
-
-      const calName = document.createElement('input');
-      calName.type  = 'text';
-      calName.className = 'cal-name-input';
-      calName.value = cal.name;
-      calName.placeholder = 'Navn';
-      calName.oninput = e => { cal.name = e.target.value; queueSave(); };
-
-      const calId = document.createElement('input');
-      calId.type  = 'text';
-      calId.className = 'cal-id-input';
-      calId.value = cal.calId;
-      calId.placeholder = 'Google Kalender-ID  (fase 4)';
-      calId.oninput = e => { cal.calId = e.target.value; queueSave(); };
-
+      const nameEl = document.createElement('span');
+      nameEl.className = 'cal-entry-name';
+      nameEl.textContent = cal.name;
       const removeBtn = document.createElement('button');
-      removeBtn.className = 'btn-remove-cal';
-      removeBtn.title = 'Fjern';
-      removeBtn.disabled = group.calendars.length <= 1;
+      removeBtn.className = 'btn-remove-cal'; removeBtn.title = 'Fjern';
       removeBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
-      removeBtn.onclick = () => removeCal(group.id, ci);
-
-      row.appendChild(calName);
-      row.appendChild(calId);
+      removeBtn.onclick = () => removeCalFromGroup(group.id, cal.id);
+      row.appendChild(nameEl);
       row.appendChild(removeBtn);
       calsSection.appendChild(row);
     });
 
-    const addCalBtn = document.createElement('button');
-    addCalBtn.className = 'btn-add-cal';
-    addCalBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Legg til kalender`;
-    addCalBtn.onclick = () => addCal(group.id);
-    calsSection.appendChild(addCalBtn);
+    if (availableCalendars) {
+      const already = new Set((group.calendars || []).map(c => c.calendar_id));
+      const options = availableCalendars.filter(c => !already.has(c.id));
+      if (options.length) {
+        const pickerRow = document.createElement('div');
+        pickerRow.className = 'cal-picker-row';
+        const sel = document.createElement('select');
+        sel.className = 'cal-select';
+        sel.innerHTML = `<option value="">Velg kalender…</option>` +
+          options.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+        const addBtn = document.createElement('button');
+        addBtn.className = 'btn-add-cal-confirm';
+        addBtn.textContent = 'Legg til';
+        addBtn.onclick = async () => {
+          const calId = sel.value;
+          const calName = sel.options[sel.selectedIndex]?.text;
+          if (!calId) return;
+          await addCalToGroup(group.id, calId, calName);
+        };
+        pickerRow.appendChild(sel);
+        pickerRow.appendChild(addBtn);
+        calsSection.appendChild(pickerRow);
+      }
+    } else if (availableCalendars === null) {
+      const hint = document.createElement('p');
+      hint.style.cssText = 'font-size:.78rem;color:#8E8E93;margin-top:.4rem';
+      hint.textContent = 'Laster kalendere…';
+      calsSection.appendChild(hint);
+    }
 
     card.appendChild(calsSection);
     container.appendChild(card);
   });
 }
 
-function addGroup() {
-  const used   = new Set(settings.groups.map(g => g.color));
-  const color  = COLOR_PALETTE.find(c => !used.has(c)) || COLOR_PALETTE[settings.groups.length % COLOR_PALETTE.length];
-  settings.groups.push({
-    id: 'grp_' + Date.now(),
-    name: 'Ny gruppe',
-    color,
-    calendars: [{ name: '', calId: '' }]
+async function patchGroup(id, fields) {
+  await fetch(`/api/groups/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields),
   });
-  saveSettings();
-  applySettings();
+}
+
+async function addGroup() {
+  const usedColors = new Set(GROUPS.map(g => g.color));
+  const color = COLOR_PALETTE.find(c => !usedColors.has(c)) || COLOR_PALETTE[0];
+  const res = await fetch('/api/groups', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: 'Ny gruppe', color }),
+  });
+  if (!res.ok) return;
+  const group = await res.json();
+  GROUPS.push(group);
+  applyMembersFromGroups();
+  renderLegend();
   renderSettings();
 }
 
-function removeGroup(groupId) {
-  if (settings.groups.length <= 1) return;
-  settings.groups = settings.groups.filter(g => g.id !== groupId);
-  saveSettings();
-  applySettings();
+async function deleteGroup(id) {
+  if (!confirm('Slett denne gruppen?')) return;
+  await fetch(`/api/groups/${id}`, { method: 'DELETE' });
+  GROUPS = GROUPS.filter(g => g.id !== id);
+  applyMembersFromGroups();
+  renderLegend();
+  renderCalendar();
   renderSettings();
 }
 
-function addCal(groupId) {
-  const g = settings.groups.find(g => g.id === groupId);
-  if (!g) return;
-  g.calendars.push({ name: '', calId: '' });
-  saveSettings();
+async function addCalToGroup(groupId, calendarId, calendarName) {
+  const res = await fetch(`/api/groups/${groupId}/calendars`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ calendar_id: calendarId, name: calendarName }),
+  });
+  if (!res.ok) return;
+  const cal = await res.json();
+  const group = GROUPS.find(g => g.id === groupId);
+  if (group) group.calendars = [...(group.calendars || []), cal];
   renderSettings();
 }
 
-function removeCal(groupId, calIdx) {
-  const g = settings.groups.find(g => g.id === groupId);
-  if (!g || g.calendars.length <= 1) return;
-  g.calendars.splice(calIdx, 1);
-  saveSettings();
+async function removeCalFromGroup(groupId, calRowId) {
+  await fetch(`/api/groups/${groupId}/calendars/${calRowId}`, { method: 'DELETE' });
+  const group = GROUPS.find(g => g.id === groupId);
+  if (group) group.calendars = (group.calendars || []).filter(c => c.id !== calRowId);
   renderSettings();
 }
 
-function resetSettings() {
-  if (!confirm('Tilbakestille til standardinnstillinger?')) return;
-  settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
-  saveSettings();
-  applySettings();
-  renderSettings();
+function applyMembersFromGroups() {
+  MEMBERS = GROUPS.map(g => ({ id: String(g.id), name: g.name, color: g.color }));
+  COLORS = {};
+  MEMBERS.forEach(m => { COLORS[m.id] = m.color; });
 }
 
 // ===== INIT =====
-(function init() {
-  settings = loadSettings();
-  // Populate MEMBERS/COLORS synchronously before any rendering
-  settings.groups.forEach(g => {
-    MEMBERS.push({ id: g.id, name: g.name, color: g.color });
-    COLORS[g.id] = g.color;
-  });
+async function init() {
+  const authed = await checkAuth();
+  if (!authed) return;
+
+  const weekISO = toISO(weekStart);
+  const [configRes, eventsRes, tasksRes, mealsRes] = await Promise.all([
+    fetch('/api/config'),
+    fetch(`/api/events?week=${weekISO}`),
+    fetch('/api/tasks'),
+    fetch(`/api/meals?week=${weekISO}`),
+  ]);
+
+  const config = await configRes.json().catch(() => ({ members: [] }));
+  MEMBERS = config.members || [];
+  COLORS = {};
+  MEMBERS.forEach(m => { COLORS[m.id] = m.color; });
+
+  EVENTS_DATA = await eventsRes.json().catch(() => []);
+  TASKS_DATA  = await tasksRes.json().catch(() => []);
+  MEALS_DATA  = await mealsRes.json().catch(() => []);
 
   renderLegend();
   renderCalendar();
   renderTasks();
   renderMeals();
   renderPhotos();
-  renderSettings();
   showTab('calendar');
-})();
+  loadWeather();
+
+  setInterval(async () => {
+    const wk = toISO(weekStart);
+    const [evRes, tkRes, mlRes] = await Promise.all([
+      fetch(`/api/events?week=${wk}`),
+      fetch('/api/tasks'),
+      fetch(`/api/meals?week=${wk}`),
+    ]);
+    EVENTS_DATA = await evRes.json().catch(() => EVENTS_DATA);
+    TASKS_DATA  = await tkRes.json().catch(() => TASKS_DATA);
+    MEALS_DATA  = await mlRes.json().catch(() => MEALS_DATA);
+    renderCalendar();
+    renderTasks();
+    renderMeals();
+  }, 60000);
+}
+
+init();
 </script>
 </body>
 </html>

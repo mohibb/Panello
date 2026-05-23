@@ -28,5 +28,3 @@ GOOGLE_REDIRECT_URI = "http://localhost:8787/auth/callback"
 # Production-only secrets — set in Cloudflare Pages dashboard as encrypted env vars:
 #   GOOGLE_CLIENT_ID
 #   GOOGLE_CLIENT_SECRET
-#   CAL_MOHIBB / CAL_SAFFA / CAL_FAMILY
-#   PHOTOS_ALBUM_ID

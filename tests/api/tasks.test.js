@@ -2,6 +2,9 @@ import { describe, test, expect } from 'vitest';
 import { env } from 'cloudflare:test';
 import { onRequestGet, onRequestPost } from '../../functions/api/tasks.js';
 import { onRequestPatch, onRequestDelete } from '../../functions/api/tasks/[id].js';
+import { TEST_USER } from '../helpers/setup.js';
+
+const DATA = { user: TEST_USER };
 
 function json(method, body) {
   return new Request('http://localhost/api/tasks', {
@@ -15,15 +18,15 @@ describe('Tasks API', () => {
   let createdId;
 
   test('GET /api/tasks returns 200 with an array', async () => {
-    const res = await onRequestGet({ request: new Request('http://localhost/api/tasks'), env });
+    const res = await onRequestGet({ request: new Request('http://localhost/api/tasks'), env, data: DATA });
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(Array.isArray(body)).toBe(true);
   });
 
   test('each task has id, title, owner, done fields', async () => {
-    await onRequestPost({ request: json('POST', { title: 'Probe task', owner: 'shared' }), env });
-    const res = await onRequestGet({ request: new Request('http://localhost/api/tasks'), env });
+    await onRequestPost({ request: json('POST', { title: 'Probe task', owner: 'shared' }), env, data: DATA });
+    const res = await onRequestGet({ request: new Request('http://localhost/api/tasks'), env, data: DATA });
     const body = await res.json();
     for (const t of body) {
       expect(typeof t.id).toBe('number');
@@ -37,6 +40,7 @@ describe('Tasks API', () => {
     const res = await onRequestPost({
       request: json('POST', { title: 'CI test task', owner: 'mohibb' }),
       env,
+      data: DATA,
     });
     expect(res.status).toBe(201);
     const body = await res.json();
@@ -48,7 +52,7 @@ describe('Tasks API', () => {
   });
 
   test('POST /api/tasks returns 400 when title is missing', async () => {
-    const res = await onRequestPost({ request: json('POST', { owner: 'shared' }), env });
+    const res = await onRequestPost({ request: json('POST', { owner: 'shared' }), env, data: DATA });
     expect(res.status).toBe(400);
   });
 
@@ -61,6 +65,7 @@ describe('Tasks API', () => {
       }),
       env,
       params: { id: String(createdId) },
+      data: DATA,
     });
     expect(res.status).toBe(200);
     const body = await res.json();
@@ -76,6 +81,7 @@ describe('Tasks API', () => {
       }),
       env,
       params: { id: '999999' },
+      data: DATA,
     });
     expect(res.status).toBe(404);
   });
@@ -85,10 +91,11 @@ describe('Tasks API', () => {
       request: new Request(`http://localhost/api/tasks/${createdId}`, { method: 'DELETE' }),
       env,
       params: { id: String(createdId) },
+      data: DATA,
     });
     expect(del.status).toBe(200);
 
-    const list = await onRequestGet({ request: new Request('http://localhost/api/tasks'), env });
+    const list = await onRequestGet({ request: new Request('http://localhost/api/tasks'), env, data: DATA });
     const body = await list.json();
     expect(body.map(t => t.id)).not.toContain(createdId);
   });
@@ -98,6 +105,7 @@ describe('Tasks API', () => {
       request: new Request('http://localhost/api/tasks/999999', { method: 'DELETE' }),
       env,
       params: { id: '999999' },
+      data: DATA,
     });
     expect(res.status).toBe(404);
   });

@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A family dashboard (Malik family) hosted on Cloudflare Pages, displayed on a wall-mounted screen. Inspired by Skylight. See `PROJECT_PLAN.md` for full architecture, API contract, DB schema, and phased build plan.
 
-**Current state:** Phase 1 complete (static frontend). Phase 2 complete (Cloudflare backend scaffold). Phase 3 complete (live weather, tasks, meals). Phase 4 complete (Google Calendar OAuth + events). Phase 5 next (Google Photos).
+**Current state:** Multi-user app with Google OAuth login. Users create calendar groups in Settings; calendars are selected from their connected Google account. Weather, tasks, and meals are live. Photos not yet implemented.
 
 ---
 

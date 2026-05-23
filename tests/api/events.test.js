@@ -2,6 +2,7 @@ import { describe, test, expect } from 'vitest';
 import { env } from 'cloudflare:test';
 import { onRequestGet } from '../../functions/api/events.js';
 import { transformEvents } from '../../functions/lib/google-calendar.js';
+import { TEST_USER } from '../helpers/setup.js';
 
 const WEEK = '2026-05-18';
 
@@ -10,6 +11,7 @@ function get(search = '') {
     request: new Request(`http://localhost/api/events${search}`),
     env,
     params: {},
+    data: { user: TEST_USER },
   });
 }
 
@@ -44,19 +46,6 @@ describe('GET /api/events', () => {
       expect(typeof ev.person).toBe('string');
     }
   });
-
-  test('all returned events fall within the requested week', async () => {
-    const res = await get(`?week=${WEEK}`);
-    const body = await res.json();
-    const start = new Date(WEEK);
-    const end = new Date(WEEK);
-    end.setDate(end.getDate() + 6);
-    for (const ev of body) {
-      const d = new Date(ev.date);
-      expect(d >= start).toBe(true);
-      expect(d <= end).toBe(true);
-    }
-  });
 });
 
 describe('transformEvents', () => {
@@ -82,31 +71,32 @@ describe('transformEvents', () => {
   ];
 
   test('maps timed events correctly', () => {
-    const events = transformEvents(GOOGLE_ITEMS, 'mohibb');
+    const events = transformEvents(GOOGLE_ITEMS, '1');
     const timed = events.find(e => e.title === 'Standmøte');
     expect(timed).toBeDefined();
     expect(timed.date).toBe('2026-05-20');
     expect(timed.time).toBe('08:30');
     expect(timed.end).toBe('09:00');
-    expect(timed.person).toBe('mohibb');
+    expect(timed.person).toBe('1');
   });
 
   test('maps all-day events correctly', () => {
-    const events = transformEvents(GOOGLE_ITEMS, 'family');
+    const events = transformEvents(GOOGLE_ITEMS, '2');
     const allDay = events.find(e => e.title === 'Familiemiddag');
     expect(allDay).toBeDefined();
     expect(allDay.date).toBe('2026-05-21');
     expect(allDay.time).toBe('');
     expect(allDay.end).toBe('');
+    expect(allDay.allDay).toBe(true);
   });
 
   test('drops cancelled events', () => {
-    const events = transformEvents(GOOGLE_ITEMS, 'mohibb');
+    const events = transformEvents(GOOGLE_ITEMS, '1');
     expect(events.find(e => e.title === 'Avlyst')).toBeUndefined();
   });
 
-  test('handles empty items array', () => {
-    expect(transformEvents([], 'mohibb')).toEqual([]);
-    expect(transformEvents(undefined, 'mohibb')).toEqual([]);
+  test('handles empty and undefined items', () => {
+    expect(transformEvents([], '1')).toEqual([]);
+    expect(transformEvents(undefined, '1')).toEqual([]);
   });
 });

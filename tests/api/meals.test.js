@@ -1,12 +1,14 @@
 import { describe, test, expect } from 'vitest';
 import { env } from 'cloudflare:test';
 import { onRequestGet, onRequestPost } from '../../functions/api/meals.js';
+import { TEST_USER } from '../helpers/setup.js';
 
+const DATA = { user: TEST_USER };
 const WEEK = '2026-05-18';
 
 function getWeek(week) {
   const url = week ? `http://localhost/api/meals?week=${week}` : 'http://localhost/api/meals';
-  return onRequestGet({ request: new Request(url), env });
+  return onRequestGet({ request: new Request(url), env, data: DATA });
 }
 
 function postMeal(body) {
@@ -17,6 +19,7 @@ function postMeal(body) {
       body: JSON.stringify(body),
     }),
     env,
+    data: DATA,
   });
 }
 
